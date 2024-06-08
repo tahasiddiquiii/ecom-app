@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../retrofit/local/local_db.dart';
 import '../../../../retrofit/network/api_services.dart';
 import '../model/auth_model.dart';
 
@@ -30,7 +31,11 @@ class LoginController extends GetxController {
       );
 
       _authModel = AuthModel.fromJson(response);
+      print("#################################");
+      print(authModel!.message);
+      print(authModel!.data!.id);
       if (authModel!.token != null) {
+        LocalDB.saveString("token", authModel!.data!.otp!);
         isLoading.value = false;
         isLoginFail.value = false; // Login was successful
         return authModel;

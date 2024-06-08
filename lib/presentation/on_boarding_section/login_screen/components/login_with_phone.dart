@@ -23,6 +23,13 @@ class _LoginScreenWithPhoneState extends State<LoginScreenWithPhone> {
   TextEditingController phoneController = TextEditingController();
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    phoneController.text = "1234567890";
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
@@ -123,27 +130,45 @@ class _LoginScreenWithPhoneState extends State<LoginScreenWithPhone> {
                     //   Get.to(() => OtpScreen());
                     // },
                     ontap: () async {
-                      await authController
-                          .loginApi(context, phoneController.text)
-                          .then((value) async {
+                      try {
+                        await authController.loginApi(
+                            context, phoneController.text);
+
                         authController.isLoginFail.value = false;
-                        Get.to(() => OtpScreen());
-                        // Show Snackbar
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                                'Please verify your OTP: ${authController.authModel!.data!.otp}'),
-                          ),
-                        );
-                      }).catchError((error) {
+
+                        if (authController.authModel != null &&
+                            authController.authModel!.token != null) {
+                          // If OTP is verified successfully, navigate to the next page
+                          Get.to(() => OtpScreen());
+
+                          // Show success Snackbar
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              backgroundColor: Colors.green,
+                              content: Text(
+                                'Please verify your OTP: ${authController.authModel!.data!.otp}',
+                              ),
+                            ),
+                          );
+                        } else {
+                          // Handle the case where authModel or token is null
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                  'Login failed: Invalid response from server.'),
+                            ),
+                          );
+                        }
+                      } catch (error) {
                         // Show Snackbar for error
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text('Login failed: $error'),
                           ),
                         );
-                      });
+                      }
                     },
+
                     isLoading: authController.isLoading.value,
                     name: 'Get Otp',
                   ),

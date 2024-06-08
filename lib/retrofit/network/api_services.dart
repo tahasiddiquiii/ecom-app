@@ -13,11 +13,10 @@ class ApiServices {
 
   var token = LocalServices.getToken();
 
-  wishList(dynamic data, String loginId) async {
+  getWishList(String loginId) async {
     try {
-      var response = await dio.post(
+      var response = await dio.get(
         "${AppApiEndpoints.wishListUrl}$loginId",
-        data: jsonEncode(data),
       );
       if (response != null) {
         return response;

@@ -82,25 +82,22 @@ class AccountScreen extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return GestureDetector(
                               onTap: () {
-                                if (index==0) {
-                                  
-                                Get.to(()=>const WalletScreen());
-                                }else if(index==1){
-bottom.selectedIndex.value=2;
-                      bottom.bottomNavigationIndexSelecting(2, 'more');
+                                if (index == 0) {
+                                  Get.to(() => const WalletScreen());
+                                } else if (index == 1) {
+                                  bottom.selectedIndex.value = 2;
+                                  bottom.bottomNavigationIndexSelecting(
+                                      2, 'more');
 
-print(bottom.selectedIndex);
-                                }else if(index==2){
-                                  Get.to(()=>const WishListScreen());
-                                  
-                                 }else if(index==3){
-                                        Get.to(()=>const NotificationScreen());
-
-                                 }else if(index==5){
-                                                                    Get.to(()=>const ReturnScreen()); 
-
-                                 } else {
-                                  Get.to(()=>const MoreOptionScreen());
+                                  print(bottom.selectedIndex);
+                                } else if (index == 2) {
+                                  Get.to(() => WishListScreen());
+                                } else if (index == 3) {
+                                  Get.to(() => const NotificationScreen());
+                                } else if (index == 5) {
+                                  Get.to(() => const ReturnScreen());
+                                } else {
+                                  Get.to(() => const MoreOptionScreen());
                                 }
                               },
                               child: Column(
@@ -119,7 +116,7 @@ print(bottom.selectedIndex);
                                           width: Adaptive.w(4),
                                           child: Image.asset(
                                             'assets/images/accounts${index + 1}.png',
-                                        // fit: BoxFit.fill,
+                                            // fit: BoxFit.fill,
                                             // height: Adaptive.h(4),
                                           ),
                                         )),
@@ -177,7 +174,7 @@ print(bottom.selectedIndex);
                       Spacer(),
                       GestureDetector(
                         onTap: () {
-                        Get.to(()=> EditProfileScreen());
+                          Get.to(() => EditProfileScreen());
                         },
                         child: Container(
                           padding: EdgeInsets.all(10),
@@ -288,7 +285,7 @@ print(bottom.selectedIndex);
                 ],
               ),
             ).onTap(() {
-              Get.to(()=>const CouponScreen());
+              Get.to(() => const CouponScreen());
             }),
           )
         ],
