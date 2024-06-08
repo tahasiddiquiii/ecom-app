@@ -10,6 +10,13 @@ class AppApiEndpoints {
 
   //
   static const String wishListUrl = "$baseUrl${_authResource}wishlist/";
+  static const String addWishListUrl = "$baseUrl${_authResource}wishlist/add";
+  static const String removeWishListUrl =
+      "$baseUrl${_authResource}wishlist/remove";
+  static const String topProductsUrl =
+      "$baseUrl${_authResource}productList/get";
+  static const String productDetailUrl =
+      "$baseUrl${_authResource}product/getbyId/";
 
 //   // LEAVE request
 //   static const String leaveRequestUrl =

@@ -1,8 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
-
-import 'package:dio/dio.dart';
-import 'package:ecommerce_seller/presentation/main_section/wish_list_screen/wish_list_screen.dart';
 
 import '../local/local_services.dart';
 import 'api_endpoints.dart';
@@ -12,6 +8,21 @@ class ApiServices {
   DioClient dio = DioClient();
 
   var token = LocalServices.getToken();
+
+  login(dynamic data) async {
+    try {
+      var response = await dio.post(
+        AppApiEndpoints.loginUrl,
+        data: jsonEncode(data),
+      );
+      if (response != null) {
+        return response;
+      }
+    } catch (error) {
+      rethrow;
+    }
+    return null;
+  }
 
   getWishList(String loginId) async {
     try {
@@ -27,11 +38,54 @@ class ApiServices {
     return null;
   }
 
-  login(dynamic data) async {
+  addWishList(dynamic data) async {
     try {
       var response = await dio.post(
-        AppApiEndpoints.loginUrl,
+        AppApiEndpoints.addWishListUrl,
         data: jsonEncode(data),
+      );
+      if (response != null) {
+        return response;
+      }
+    } catch (error) {
+      rethrow;
+    }
+    return null;
+  }
+
+  removeWishList(dynamic data) async {
+    try {
+      var response = await dio.post(
+        AppApiEndpoints.removeWishListUrl,
+        data: jsonEncode(data),
+      );
+      if (response != null) {
+        return response;
+      }
+    } catch (error) {
+      rethrow;
+    }
+    return null;
+  }
+
+  getTopProducts(String page, String limit) async {
+    try {
+      var response = await dio.get(
+        "${AppApiEndpoints.topProductsUrl}?page=$page&limit=$limit",
+      );
+      if (response != null) {
+        return response;
+      }
+    } catch (error) {
+      rethrow;
+    }
+    return null;
+  }
+
+  getProductDetail(String productId) async {
+    try {
+      var response = await dio.get(
+        "${AppApiEndpoints.productDetailUrl}$productId",
       );
       if (response != null) {
         return response;

@@ -44,7 +44,7 @@ class _WishListScreenState extends State<WishListScreen> {
             appBar: AppBar(
               backgroundColor: buttonColor,
               leading: IconButton(
-                  onPressed: () {}, icon: Icon(Icons.arrow_back_ios)),
+                  onPressed: () {}, icon: const Icon(Icons.arrow_back_ios)),
               title: Text(
                 'My Favorites',
                 style: GoogleFonts.poppins(
@@ -53,7 +53,7 @@ class _WishListScreenState extends State<WishListScreen> {
               actions: [
                 GestureDetector(
                     onTap: () {
-                      Get.to(() => NotificationScreen());
+                      Get.to(() => const NotificationScreen());
                     },
                     child: Image.asset('assets/images/appbar1.png')),
                 sizedBoxWidth20,
@@ -65,44 +65,42 @@ class _WishListScreenState extends State<WishListScreen> {
             ),
             body: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Column(
-                children: [
-                  SizedBox(
-                      height: Adaptive.h(8),
-                      child: ListTile(
-                        title: Text(
-                          'Collections',
-                          style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w600, fontSize: 15.px),
-                        ),
-                        subtitle: Text(
-                          'You can now create collection of your favourite products.',
-                          style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w600, fontSize: 10.px),
-                        ),
-                      )),
-                  Container(
-                      // height: 50.h,
-                      width: 100.w,
-                      // height: 50.h,
-                      //   color: green,
-                      child: GridView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2, // Number of columns
-                                crossAxisSpacing: 5, // Spacing between columns
-                                mainAxisSpacing: 9.0, // Spacing between rows
-                                childAspectRatio: 0.8),
-                        itemCount: wishlistController
-                            .wishListModel!.wishlist!.products!.length,
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                            onTap: () {
-                              // Navigator.push(context, MaterialPageRoute(builder: (context) => AnimalDetails(),));
-                            },
-                            child: Container(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(
+                        height: Adaptive.h(8),
+                        child: ListTile(
+                          title: Text(
+                            'Collections',
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w600, fontSize: 15.px),
+                          ),
+                          subtitle: Text(
+                            'You can now create collection of your favourite products.',
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w600, fontSize: 10.px),
+                          ),
+                        )),
+                    Container(
+                        // height: 50.h,
+                        width: 100.w,
+                        // height: 50.h,
+                        //   color: green,
+                        child: GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2, // Number of columns
+                                  crossAxisSpacing:
+                                      5, // Spacing between columns
+                                  mainAxisSpacing: 9.0, // Spacing between rows
+                                  childAspectRatio: 0.8),
+                          itemCount: wishlistController
+                              .wishListModel!.wishlist!.products!.length,
+                          itemBuilder: (context, index) {
+                            return Container(
                               margin: const EdgeInsets.only(left: 0),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
@@ -112,7 +110,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                 ),
                               ),
                               child: Padding(
-                                padding: EdgeInsets.all(0),
+                                padding: const EdgeInsets.all(0),
                                 child: Stack(
                                   children: [
                                     Column(
@@ -202,7 +200,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                                     fontWeight:
                                                         FontWeight.w500),
                                               ),
-                                              Spacer(),
+                                              const Spacer(),
                                               Text(
                                                 'MOQ: ${wishlistController.wishListModel!.wishlist!.products![index].noOfPairs} Pcs',
                                                 style: GoogleFonts.poppins(
@@ -229,7 +227,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                                     fontWeight:
                                                         FontWeight.w500),
                                               ),
-                                              Spacer(),
+                                              const Spacer(),
                                               Text(
                                                 'MOQ: ${wishlistController.wishListModel!.wishlist!.products![index].noOfPairs} Pcs',
                                                 style: GoogleFonts.poppins(
@@ -263,11 +261,27 @@ class _WishListScreenState extends State<WishListScreen> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Spacer(),
+                                          const Spacer(),
                                           // (),
-                                          Icon(
-                                            Icons.favorite,
-                                            color: red,
+                                          InkWell(
+                                            onTap: () async {
+                                              await wishlistController
+                                                  .removeWishList(
+                                                      authController
+                                                          .authModel!.data!.id!,
+                                                      wishlistController
+                                                          .wishListModel!
+                                                          .wishlist!
+                                                          .products![index]
+                                                          .id!);
+                                              await wishlistController
+                                                  .getWishList(authController
+                                                      .authModel!.data!.id!);
+                                            },
+                                            child: const Icon(
+                                              Icons.favorite,
+                                              color: red,
+                                            ),
                                           )
                                         ],
                                       ),
@@ -275,11 +289,11 @@ class _WishListScreenState extends State<WishListScreen> {
                                   ],
                                 ),
                               ),
-                            ),
-                          );
-                        },
-                      ))
-                ],
+                            );
+                          },
+                        ))
+                  ],
+                ),
               ),
             ),
           ));
