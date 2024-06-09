@@ -321,6 +321,13 @@ class _TopProductScreenState extends State<TopProductScreen> {
                                                         .id!);
                                             await topProductsController
                                                 .getTopProducts(page, limit);
+
+                                            Get.snackbar(
+                                              "Wish List",
+                                              "Added to Wish List",
+                                              snackPosition: SnackPosition.TOP,
+                                              duration: Duration(seconds: 3),
+                                            );
                                           },
                                           child: const Icon(
                                             Icons.favorite,

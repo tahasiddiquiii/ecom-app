@@ -277,6 +277,14 @@ class _WishListScreenState extends State<WishListScreen> {
                                               await wishlistController
                                                   .getWishList(authController
                                                       .authModel!.data!.id!);
+
+                                              Get.snackbar(
+                                                "Wish List",
+                                                "Remove from Wish List",
+                                                snackPosition:
+                                                    SnackPosition.TOP,
+                                                duration: Duration(seconds: 3),
+                                              );
                                             },
                                             child: const Icon(
                                               Icons.favorite,
