@@ -1,7 +1,11 @@
 import 'package:ecommerce_seller/presentation/main_section/home_screen/cart/cart_screen.dart';
+import 'package:ecommerce_seller/presentation/main_section/home_screen/cart/controller/cart_controller.dart';
 import 'package:ecommerce_seller/presentation/main_section/home_screen/top_products/controller/product_detail_controller.dart';
 import 'package:ecommerce_seller/presentation/main_section/home_screen/top_products/product_screen/widgets/productdetails_widget.dart';
 import 'package:ecommerce_seller/presentation/main_section/home_screen/top_products/rating_and_review_screen/rating_And_review_screen.dart';
+import 'package:ecommerce_seller/presentation/on_boarding_section/login_screen/controller/login_controller.dart';
+import 'package:ecommerce_seller/presentation/widgets/custom_long_button.dart';
+import 'package:ecommerce_seller/presentation/widgets/styled_custom_button.dart';
 import 'package:ecommerce_seller/utilz/colors.dart';
 import 'package:ecommerce_seller/utilz/sized_box.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +26,8 @@ class ProductDetailsScreen extends StatefulWidget {
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   final productDetailController = Get.put(ProductDetailController());
+  final cartController = Get.put(CartController());
+  final authController = Get.put(LoginController());
 
   @override
   void initState() {
@@ -633,6 +639,51 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
+          // Flexible(
+          //   child: CustomLongButton(
+          // ontap: () async {
+          //   await cartController.addToCart(
+          //       authController.authModel!.data!.id!,
+          //       widget.productId,
+          //       1,
+          //       '15');
+
+          //   await Get.to(() => const CartScreen());
+
+          //   Get.snackbar(
+          //     "Cart",
+          //     cartController.addToCartMessage.value,
+          //     snackPosition: SnackPosition.TOP,
+          //     duration: Duration(seconds: 3),
+          //   );
+          // },
+          //       name: 'Add To Cart'),
+          // ),
+          // AnimatedContainer(
+          //   width: authController.isLoading.value == false
+          //       ? MediaQuery.of(context).size.width
+          //       : 60,
+          //   duration: const Duration(milliseconds: 300),
+          //   child: StyledCustomButton(
+          //       isLoading: cartController.isLoading.value,
+          //       onTap: () async {
+          //         await cartController.addToCart(
+          //             authController.authModel!.data!.id!,
+          //             widget.productId,
+          //             1,
+          //             '15');
+
+          //         await Get.to(() => const CartScreen());
+
+          //         Get.snackbar(
+          //           "Cart",
+          //           cartController.addToCartMessage.value,
+          //           snackPosition: SnackPosition.TOP,
+          //           duration: Duration(seconds: 3),
+          //         );
+          //       },
+          //       name: 'Add To Cart'),
+          // ),
           Container(
             height: Adaptive.h(6),
             width: Adaptive.w(45),
@@ -652,8 +703,18 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     fontWeight: FontWeight.w600),
               ),
             ),
-          ).onTap(() {
-            Get.to(() => const CartScreen());
+          ).onTap(() async {
+            await cartController.addToCart(
+                authController.authModel!.data!.id!, widget.productId, 1, '15');
+
+            await Get.to(() => const CartScreen());
+
+            Get.snackbar(
+              "Cart",
+              cartController.addToCartMessage.value,
+              snackPosition: SnackPosition.TOP,
+              duration: Duration(seconds: 3),
+            );
           }),
           Container(
             height: Adaptive.h(6),
